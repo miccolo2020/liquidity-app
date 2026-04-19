@@ -1,0 +1,65 @@
+ name: Build Android APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch: # Allows manual trigger from GitHub Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 8
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Build web app
+      run: pnpm run build
+
+    - name: Sync Capacitor
+      run: pnpm run cap:sync
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x android/gradlew
+
+    - name: Build Android APK
+      run: |
+        cd android
+        ./gradlew assembleDebug --no-daemon
+
+    - name: Upload APK artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: liquidity-app-debug
+        path: android/app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 30
+
+    - name: Get APK info
+      run: |
+        echo "✅ APK built successfully!"
+        echo "📦 APK size: $(du -h android/app/build/outputs/apk/debug/app-debug.apk | cut -f1)"
+        echo "📍 Download the APK from the Actions artifacts"
