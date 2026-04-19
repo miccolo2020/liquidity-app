@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Liquidity</string>
-    <string name="title_activity_main">Liquidity</string>
-    <string name="package_name">com.liquidity.loanapp</string>
-    <string name="custom_url_scheme">com.liquidity.loanapp</string>
-</resources>
