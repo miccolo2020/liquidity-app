@@ -24,7 +24,7 @@ jobs:
       - run: rm -rf android/
       - run: npx cap add android
       - run: npx cap sync android
-      - run: cd android && gradle wrapper --gradle-version 8.7
+      - run: cd android && gradle wrapper --gradle-version 8.13
       - run: chmod +x android/gradlew
       - run: cd android && ./gradlew assembleDebug --stacktrace
       - uses: actions/upload-artifact@v4
