@@ -1,0 +1,26 @@
+# Dependencies 
+node_modules/ 
+.pnpm-store/ 
+ 
+# Build outputs 
+dist/ 
+dist-ssr/ 
+build/ 
+ 
+# Capacitor 
+android/ 
+ios/ 
+ 
+# Environment variables 
+.env 
+.env.local 
+ 
+# Logs 
+*.log 
+ 
+# OS 
+.DS_Store 
+Thumbs.db 
+ 
+# Package manager 
+pnpm-lock.yaml 
